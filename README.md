@@ -1,5 +1,5 @@
 #
-This repo is a simple nextjs app that allows you to mark locations of book stores, that you can purchase books from at a lower value than they can sell on the World of books app, thereby making a profit
+This repo is a simple nextjs app that allows you to mark locations of book stores, that you can purchase books from at a lower value than they can sell on the World of books app.
 
 ## Getting Started
 
