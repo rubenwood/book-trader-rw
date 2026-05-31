@@ -8,19 +8,19 @@ const MapContainer = dynamic<any>(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
   { ssr: false }
 );
-const TileLayer = dynamic(
+const TileLayer = dynamic<any>(
   () => import("react-leaflet").then((mod) => mod.TileLayer),
   { ssr: false }
 );
-const CircleMarker = dynamic(
+const CircleMarker = dynamic<any>(
   () => import("react-leaflet").then((mod) => mod.CircleMarker),
   { ssr: false }
 );
-const Popup = dynamic(
+const Popup = dynamic<any>(
   () => import("react-leaflet").then((mod) => mod.Popup),
   { ssr: false }
 );
-const Tooltip = dynamic(
+const Tooltip = dynamic<any>(
   () => import("react-leaflet").then((mod) => mod.Tooltip),
   { ssr: false }
 );
@@ -40,40 +40,61 @@ function MapRightClickHandler({ onRightClick }: { onRightClick: (lat: number, ln
 }
 
 
-type ShopMapClientProps = {
-  shops: {
-    id: number;
-    name: string;
-    latitude: number;
-    longitude: number;
-  }[];
-};
+// type ShopMapClientProps = {
+//   shops: {
+//     id: number;
+//     name: string;
+//     latitude: number;
+//     longitude: number;
+//   }[];
+// };
 
-export default function ShopMapClient(props: ShopMapClientProps) {
-  const { shops } = props;
-  return (
-    <>
+const shops: Shop[] = [
+  {
+    id: "1",
+    name: "Barnardos - Ashton",
+    latitude: 53.4912713,
+    longitude: -2.0976884,
+    description: "",
+    booksPerDeal: 10,
+    dealPrice: 1,
+    createdAt: new Date()
+  },
+  {
+    id: "2",
+    name: "YMCA - Regent Road",
+    latitude: 53.4777003,
+    longitude: -2.2643381,
+    description: "",
+    booksPerDeal: 5,
+    dealPrice: 1,
+    createdAt: new Date()
+  }
+];
 
 
-    <link
-          rel="stylesheet"
-          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-          crossOrigin=""
-        />
+function onRightClickMap(lat: number, lng: number) {
+  console.log(`Right-clicked at: ${lat}, ${lng}`);
+}
 
+export default function ShopMapClient() {
+  //const { shops } = props;
+  
+return (
       <MapContainer
         center={[54.5, -4]}
         zoom={6}
-        minZoom={5}
+        minZoom={0}
         maxZoom={12}
-        scrollWheelZoom
+        scrollWheelZoom={true}
         className="h-full w-full"
+        style={{ background: "#1a1a2e" }}
       >
+        <MapRightClickHandler onRightClick={onRightClickMap} />
         <TileLayer
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         />
-
         {shops.map((shop) => (
           <CircleMarker
             key={shop.id}
@@ -81,10 +102,13 @@ export default function ShopMapClient(props: ShopMapClientProps) {
           >
             <Popup>
               <strong>{shop.name}</strong>
+              <br />
+              {shop.description}
+              <br />
+              {shop.booksPerDeal} books for £{shop.dealPrice.toFixed(2)}
             </Popup>
           </CircleMarker>
         ))}
       </MapContainer>
-    </>
   );
 }
