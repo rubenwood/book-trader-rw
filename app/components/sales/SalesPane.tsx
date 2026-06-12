@@ -8,6 +8,10 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+function totalRevenue(sales: Sale[]): number {
+    return sales.reduce((total, sale) => total + sale.sale_value, 0);
+}
+
 export function SalesPane(props: { sales: Sale[] }) {
     return (
         <div className="p-4">
@@ -30,6 +34,12 @@ export function SalesPane(props: { sales: Sale[] }) {
                             <TableCell>{sale.date.toLocaleString()}</TableCell>
                         </TableRow>
                     ))}
+                    <TableRow>
+                        <TableCell className="font-bold">Total</TableCell>
+                        <TableCell></TableCell>
+                        <TableCell className="font-bold">£{totalRevenue(props.sales).toFixed(2)}</TableCell>
+                        <TableCell></TableCell>
+                    </TableRow>
                 </TableBody>
             </Table>
         </div>
