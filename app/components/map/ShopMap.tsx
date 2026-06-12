@@ -39,48 +39,37 @@ function MapRightClickHandler({ onRightClick }: { onRightClick: (lat: number, ln
   return null;
 }
 
-
-// type ShopMapClientProps = {
-//   shops: {
-//     id: number;
-//     name: string;
-//     latitude: number;
-//     longitude: number;
-//   }[];
-// };
-
-const shops: Shop[] = [
-  {
-    id: "1",
-    name: "Barnardos - Ashton",
-    latitude: 53.4912713,
-    longitude: -2.0976884,
-    description: "",
-    booksPerDeal: 10,
-    dealPrice: 1,
-    createdAt: new Date()
-  },
-  {
-    id: "2",
-    name: "YMCA - Regent Road",
-    latitude: 53.4777003,
-    longitude: -2.2643381,
-    description: "",
-    booksPerDeal: 5,
-    dealPrice: 1,
-    createdAt: new Date()
-  }
-];
+// const shops: Shop[] = [
+//   {
+//     id: 1,
+//     name: "Barnardos - Ashton",
+//     latitude: 53.4912713,
+//     longitude: -2.0976884,
+//     description: "",
+//     booksPerDeal: 10,
+//     dealPrice: 1,
+//     createdAt: new Date()
+//   },
+//   {
+//     id: 2,
+//     name: "YMCA - Regent Road",
+//     latitude: 53.4777003,
+//     longitude: -2.2643381,
+//     description: "",
+//     booksPerDeal: 5,
+//     dealPrice: 1,
+//     createdAt: new Date()
+//   }
+// ];
 
 
 function onRightClickMap(lat: number, lng: number) {
   console.log(`Right-clicked at: ${lat}, ${lng}`);
 }
 
-export default function ShopMapClient() {
-  //const { shops } = props;
+export function ShopMapClient(props: { shops: Shop[] }) {
   
-return (
+  return (
       <MapContainer
         center={[54.5, -4]}
         zoom={6}
@@ -95,7 +84,7 @@ return (
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         />
-        {shops.map((shop) => (
+        {props.shops.map((shop) => (
           <CircleMarker
             key={shop.id}
             center={[shop.latitude, shop.longitude]}
@@ -105,7 +94,7 @@ return (
               <br />
               {shop.description}
               <br />
-              {shop.booksPerDeal} books for £{shop.dealPrice.toFixed(2)}
+              {shop.books_per_deal} books for £{shop.deal_price.toFixed(2)}
             </Popup>
           </CircleMarker>
         ))}

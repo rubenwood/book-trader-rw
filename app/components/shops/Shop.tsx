@@ -1,14 +1,14 @@
 type Shop = {
-  id: string
+  id: number
+  createdAt: Date
+
   name: string
   description: string
 
   // pricing model
-  booksPerDeal: number // 10
-  dealPrice: number // 1.00
+  books_per_deal: number // 10
+  deal_price: number // 1.00
 
   latitude: number
-  longitude: number
-
-  createdAt: Date
+  longitude: number  
 }
