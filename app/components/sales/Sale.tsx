@@ -7,4 +7,5 @@ type Sale = {
     est_sale_value: number
     sale_value: number
     book_count: number
+    cost:number
 }

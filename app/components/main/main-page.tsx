@@ -17,9 +17,9 @@ export async function MainPage() {
     const loggedIn = await supabase.auth.getSession().then(({ data: { session } }) => !!session);
 
     return (
-        <div>
+            <>
             {loggedIn ? (
-                <div className="flex flex-col md:flex-row h-full">           
+                <div className="flex flex-col md:flex-row h-full">  
                     <SalesPane sales={sales} />
                     <ShopMapClient shops={shops} />
                 </div>
@@ -27,6 +27,6 @@ export async function MainPage() {
             :
                 <Login />
             }
-        </div>
+        </>
     );
 }
