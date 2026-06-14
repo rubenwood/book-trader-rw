@@ -13,6 +13,9 @@ import { Separator } from "@/components/ui/separator"
 function totalBooks(sales: Sale[]): number {
     return sales.reduce((total, sale) => total + sale.book_count, 0);
 }
+function totalEstSaleValue(sales: Sale[]): number {
+    return sales.reduce((total, sale) => total + sale.est_sale_value, 0);
+}
 function totalSaleValue(sales: Sale[]): number {
     return sales.reduce((total, sale) => total + sale.sale_value, 0);
 }
@@ -34,6 +37,7 @@ export function SalesPane(props: { sales: Sale[] }) {
                     <TableRow>
                         <TableHead className="font-bold">Shop</TableHead>
                         <TableHead className="font-bold">Books Sold</TableHead>
+                        <TableHead className="font-bold">Est. Sale Value</TableHead>
                         <TableHead className="font-bold">Sale Value</TableHead>
                         <TableHead className="font-bold">Cost</TableHead>
                         <TableHead className="font-bold">Date</TableHead>
@@ -44,14 +48,16 @@ export function SalesPane(props: { sales: Sale[] }) {
                         <TableRow key={index}>
                             <TableCell>{sale.shop_id}</TableCell>
                             <TableCell>{sale.book_count}</TableCell>
-                            <TableCell>£{sale.sale_value.toFixed(2)}</TableCell>
-                            <TableCell>£{sale.cost.toFixed(2)}</TableCell>
-                            <TableCell>{sale.date.toLocaleString()}</TableCell>
+                            <TableCell>£{sale?.est_sale_value?.toFixed(2)}</TableCell>
+                            <TableCell>£{sale?.sale_value?.toFixed(2)}</TableCell>
+                            <TableCell>£{sale?.cost?.toFixed(2)}</TableCell>
+                            <TableCell>{sale?.date?.toLocaleString()}</TableCell>
                         </TableRow>
                     ))}
                     <TableRow>
                         <TableCell className="font-bold">Total</TableCell>
                         <TableCell className="font-bold">{totalBooks(props.sales)}</TableCell>
+                        <TableCell className="font-bold">£{totalEstSaleValue(props.sales).toFixed(2)}</TableCell>
                         <TableCell className="font-bold">£{totalSaleValue(props.sales).toFixed(2)}</TableCell>
                         <TableCell className="font-bold">£{totalCost(props.sales).toFixed(2)}</TableCell>
                     </TableRow>
